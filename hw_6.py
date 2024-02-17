@@ -59,3 +59,6 @@ class AddressBook(UserDict):
             self.data.pop(Record)
 
 
+
+# Я можливо не до кінця зрозумів умови дз , але ви підкажіть якщо що не так. Дякую!!!
+
