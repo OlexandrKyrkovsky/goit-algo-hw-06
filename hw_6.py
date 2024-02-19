@@ -8,25 +8,21 @@ class Field:
         return str(self.value)
 
 class Name(Field):
-    def __init__(self, value, name):
-           super().__init__(value)
-           self.name=name
-    
+    def __init__(self, value):
+        super().__init__(value)
 
 class Phone(Field):
-    def __init__(self, value,phone):
-          super().__init__(value)
-          self.phone=phone
- 
-
-class Record(Name):
+    def __init__(self, value):
+        super().__init__(value)
+        
+class Record:
     def __init__(self, name):
-        self.name =name
+        self.name =Name(name)
         self.phones = []
 
 
     def add_phone(self,phone):
-        self.phones.append(phone)
+        self.phones.append(Phone(phone))
         
 
     def remove_phone(self,phone):
@@ -35,7 +31,10 @@ class Record(Name):
 
 
     def edit_phone(self,phone_old,phone_new):
-        self.phones[phone_old]=phone_new
+        for p in self.phones:
+            if p.value == phone_old:
+                p.value = phone_new
+                break
 
 
     def find_phone(self,phone):
@@ -49,15 +48,15 @@ class Record(Name):
 class AddressBook(UserDict):
     # реалізація класу
     book={}      
-    def add_record(self,Record):
-        self.data=Record
+    def add_record(self,record):
+        self.data[record.name.value]=record
 
     def find(self,name):
-        print(self.data[name])
+        return self.data.get(name)
 		
-    def delete(self,Record):
-        if Record in self.data:
-            self.data.pop(Record)
+    def delete(self,name):
+        if name in self.data:
+            del self.data[name]
 
 
 
@@ -68,7 +67,7 @@ book = AddressBook()
 john_record = Record("John")
 john_record.add_phone("1234567890")
 john_record.add_phone("5555555555")
-
+print(john_record)
 #     # Додавання запису John до адресної книги
 book.add_record(john_record)
 
